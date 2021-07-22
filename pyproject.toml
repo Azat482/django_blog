@@ -1,0 +1,29 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Aza", email = "4est326@gmail.com"},
+]
+dependencies = [
+    "django~=3.2",
+    "djangorestframework~=3.12",
+    "django-cors-headers~=3.7",
+    "psycopg2~=2.9",
+]
+requires-python = ">=3.8"
+dynamic = ["classifiers"]
+license = {text = "MIT"}
+
+[project.urls]
+homepage = ""
+
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[tool]
+[tool.pdm]
+
+[tool.pdm.scripts]
+dserver = 'python3 ./janweb_blog/manage.py runserver'

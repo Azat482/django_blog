@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'Otoman';
+    src: 
+        url('./fonts/Otomanopee_One/OtomanopeeOne-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('./fonts/Lato/Lato-Regular.ttf');
+}
+
+.Header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width:100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    background-color: black;
+    padding-right: 250px;
+    padding-left:  250px;
+    flex-direction: row;
+    margin: 0;
+}
+
+.h_item{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.logo a{
+    color: white;
+    font-family: 'Otoman';
+    font-size: 32px;
+    display: block;
+    text-decoration: none;
+}
+
+.header_navbar{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.h_nav_item{
+    margin-left: 40px;
+}
+
+.h_nav_item a{
+    color: white;
+    text-decoration: none;
+    font-family: 'Lato';
+    font-size: 20px;
+}
+

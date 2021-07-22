@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+<header>
+    <meta charset="utf-8">
+    <title>Litblog</title>
+    <link rel="stylesheet" href="{%static 'css/header.css'%}">
+    <link rel="stylesheet" href="{% static 'css/content.css' %}">
+    <link rel="stylesheet" href="{%static 'css/index.css'%}">
+</header>
+<body>
+    <div class = 'Header'>
+        <div class = 'h_item'>
+            <div class = 'logo' >
+                <a href="/">
+                    Litblog
+                </a>
+            </div>
+            {% block auth_user %}
+            <div class = 'header_navbar'>
+                <div class = 'h_nav_item'><a href="/about"       >About</a></div>
+                <div class = 'h_nav_item'><a href="/registration">SigIn</a></div>
+                <div class = 'h_nav_item'><a href="/login"       >LogIn</a></div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+    <div class = 'navbar'>
+        {%block navbar%}
+
+        {%endblock%}
+    </div>
+    <div class = 'content'>
+        {%block content%}
+        content
+        {%endblock%}
+    </div>    
+</body>
+</html>
