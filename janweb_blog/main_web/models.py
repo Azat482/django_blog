@@ -1,16 +1,15 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Users(models.Model):
-    login = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    privilage = models.IntegerField()
+
+class Category(models.Model):
+    cat = models.CharField(max_length=50)
 
 class Article(models.Model):
-    author = models.ForeignKey(Users, null=True, on_delete=models.SET_NULL)
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=255)
-    cat = models.CharField(max_length=100)
-    text = models.TextField()
+    cat = models.ManyToManyField(Category)
+    short_description = models.CharField(max_length=500, default='')
+    text = models.TextField(max_length=10000)
 
-
-    

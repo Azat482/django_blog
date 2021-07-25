@@ -13,5 +13,10 @@
         {%endfor%}
         <input type='submit' value="Register">
     </form>
+    {%if error %}
+        <div class='error_mess'>
+            {{error}}
+        </div>
+    {%endif%}
 </div>
 {%endblock%}

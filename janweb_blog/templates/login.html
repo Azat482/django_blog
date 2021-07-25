@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{%static './css/logining.css'%}">
 <div class = 'logining'>
     <div class = 'logo_log'>
-        <p>Login</p>
+        Login
     </div>
     <form method="POST">
         {%csrf_token%}
@@ -17,7 +17,9 @@
         <input type="submit" value="Enter">
     </form>
     {% if is_wrong == True  %}
-    wrong door
+    <div class="error_mess">
+        Error data
+    </div>
     {% endif %}
 </div>
 {%endblock%}

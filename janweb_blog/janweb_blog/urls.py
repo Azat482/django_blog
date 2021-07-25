@@ -20,8 +20,12 @@ from main_web import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
+
+    #reg and auth
     path('registration/', views.Registration),
     path('login/', views.Logining),
-    path('logout', views.Logout),
-    path('login/wrong/', views.LoginingWrong)
+    path('logout/', views.Logout),
+    path('login/wrong/', views.LoginingWrong),
+
+    path('poste/', views.PosteArticle)
 ]

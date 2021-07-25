@@ -19,7 +19,7 @@
     display: grid;
     grid-template-rows: auto auto auto auto auto;
     justify-items: center;
-    padding-bottom: 150px;
+    padding-bottom: 120px;
 }
 
 .log_form_item{
@@ -50,7 +50,15 @@ input[type = submit]{
     font-family: 'Roboto';
 }
 
-.logining.logo_log p{
+.logo_log {
+    display: block;
     font-family: 'Roboto';
-    font-size: 40px;
+    font-size: 60px;
+}
+
+.error_mess{
+    display: block;
+    font-family: 'Roboto';
+    font-size: 20px;
+    color: red;
 }
