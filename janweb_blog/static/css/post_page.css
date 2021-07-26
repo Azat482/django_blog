@@ -1,0 +1,99 @@
+
+
+.post_article_page{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: inherit;
+    width: auto;
+}
+
+#article_add_form{
+    align-self: flex-start;
+    box-sizing: border-box;
+    padding-top: 50px;
+    border-top:  none;
+    border-bottom: none;
+    border-right:1px solid rgb(230, 230, 230) ;
+    border-left: 1px solid rgb(230, 230, 230);
+    width: 70%;
+    height: 100%;
+    background-color: rgb(253, 253, 253);
+
+}
+
+#article_add_form form{
+    display: grid;
+    box-sizing: border-box;
+    width: auto;
+    height: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.post_article_page.submit_button {
+    justify-self: self-end;
+}
+
+#form_item{
+    margin-bottom: 20px;
+}
+
+#form_item textarea{
+    width: 100%;
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+}
+
+#form_item .label{
+    font-size: 35px;
+    font-family: 'RobotoBold';
+    width: auto;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#form_item textarea[name = 'name']{
+    height: 75px;
+    font-size: 20px;
+}
+
+#form_item textarea[name = 'short_description']{
+    height: 125px;
+    font-size: 20px;
+}
+
+#form_item textarea[name = 'text']
+{
+    height: 500px;
+    font-size: 20px;
+}
+
+#article_add_form input[type = 'submit']{
+    font-family: 'ZillaLight';
+    font-size: 30px;
+    border-color: red;
+    box-shadow: none;
+    border-radius: 10px;
+    background-color: rgb(255, 0, 0);
+    color: black;
+    width: 250px;
+    height: 50px;
+}
+
+#select_cat{
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 15px;
+    height: auto;
+    width: auto;
+}
+
+select#select_cat {
+    width: 300px;
+    height: 40px;
+    font-family: 'ZillaLight';
+    font-size: 25px;
+}

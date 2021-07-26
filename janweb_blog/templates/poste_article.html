@@ -1,0 +1,27 @@
+{%extends 'ex_auth_index.html'%}
+
+
+{%block content%}
+{%load static%}
+<link rel="stylesheet" href="{%static './css/post_page.css'%}">
+<div class = 'post_article_page'>
+    <div id = 'article_add_form'>
+        <form method="POST">
+            {%csrf_token%}
+            {%for item in ArticlePost%}
+            <div id = 'form_item'>
+                <div class = 'label'>
+                    <div>{{item.label}}</div>
+                </div>
+                <div class = 'form_item'>
+                    <div> {{item}}</div>   
+                </div>
+            </div>
+            {%endfor%}
+            <div class = 'submit_button'>
+                <input type="submit" value="Poste this article">
+            </div>
+        </form>    
+    </div>
+</div>
+{%endblock%}

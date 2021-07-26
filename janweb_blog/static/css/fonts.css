@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'ArcivoBlack';
+    src: url('./fonts/Archivo_Black/ArchivoBlack-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'RobotoBold';
+    src: url('./fonts/Roboto/Roboto-BoldItalic.ttf');
+}
+
+@font-face {
+    font-family: 'ZillaLight';
+    src: url('./fonts/Zilla_Slab/ZillaSlab-Light.ttf');
+}
