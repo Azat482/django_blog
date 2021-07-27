@@ -1,20 +1,27 @@
+from django.http.response import Http404
+from .models import Article
 from django import forms
+from django.forms.fields import ChoiceField
+from .forms import User_reg_form, User_auth_form, UserPostArticleForm
+
 from django.contrib import auth
 from django.contrib.auth import login
-from django.forms.fields import ChoiceField
+
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, request
-from .forms import User_reg_form, User_auth_form, UserPostArticleForm
+from django.http import HttpResponse, HttpResponseRedirect, request, Http404
+
 from .logic.UserMng import AddUser, AuthUser, LogoutUser
-from .logic.ArticlePost import AddPost
+from .logic.ArticleManager import AddPost, GetArtcles, GetFullPost
 
 # Create your views here.
 def index(request):
+    data = dict()
+    data['articles'] = GetArtcles()
     if not request.user.is_authenticated:
-        return render(request, 'index.html')
+        return render(request, 'index.html', context=data)
     else:
         print('req', request)
-        return render(request, 'ex_auth_index.html' )
+        return render(request, 'ex_auth_index.html', context = data )
 
 def Registration(request):
     if request.method == 'POST':
@@ -83,3 +90,15 @@ def PosteArticle(request):
             return render(request, 'poste_article.html', context=data)
     else:
         return HttpResponseRedirect('/')
+
+def GetPost(request):
+    idPost = request.GET.get('id')
+    try:
+        post = GetFullPost(idPost)
+    except Exception as e:
+        print(e)
+        raise Http404
+    else:
+        data = dict()
+        data['post'] = post
+        return render(request, 'fullpost_page.html', context=data)

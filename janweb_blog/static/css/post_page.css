@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: flex-start;
     height: inherit;
-    width: auto;
+    width: 100%;
 }
 
 #article_add_form{

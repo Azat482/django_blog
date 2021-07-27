@@ -4,11 +4,21 @@
 }
 
 @font-face {
-    font-family: 'RobotoBold';
+    font-family: 'RobotoBoldUtallic';
     src: url('./fonts/Roboto/Roboto-BoldItalic.ttf');
 }
 
 @font-face {
     font-family: 'ZillaLight';
     src: url('./fonts/Zilla_Slab/ZillaSlab-Light.ttf');
+}
+
+@font-face {
+    font-family: 'RobotoBold';
+    src: url('./fonts/Roboto/Roboto-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'ZillaMedium';
+    src: url('./fonts/Zilla_Slab/ZillaSlab-Medium.ttf');
 }

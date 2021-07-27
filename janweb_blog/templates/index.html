@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="{%static 'css/header.css'%}">
     <link rel="stylesheet" href="{% static 'css/content.css' %}">
     <link rel="stylesheet" href="{%static 'css/index.css'%}">
-    <link rel="stylesheet" href="{%static 'css/fonts.css'}">
+    <link rel="stylesheet" href="{%static 'css/fonts.css'%}">
+    <link rel="stylesheet" href="{%static 'css/articles_container.css'%}">
 </header>
 <body>
     <div class = 'Header'>
@@ -35,7 +36,30 @@
     </div>
     <div class = 'content'>
         {%block content%}
-        content
+        <div id = 'articles_container'>
+            {%for post in articles%}
+            <div class = 'box_post'>
+                <a href="/post/?id={{post.id}}">
+                    <div class = 'name_of_post'>
+                        {{post.name}}
+                    </div>    
+                </a>
+                <div class = 'category'>
+                    {%for category in post.cat%}
+                    <div class = 'cat_item'>
+                        {{category}}
+                    </div>
+                    {%endfor%}
+                </div>
+                <div class = 'description'>
+                    {{post.shrt_desc}}
+                </div>
+            </div>
+            {%endfor%}    
+        </div>
+        <div id = 'pult'>
+
+        </div>
         {%endblock%}
     </div>    
 </body>

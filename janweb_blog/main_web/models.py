@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(models.Model):
+    
     cat = models.CharField(max_length=50)
 
 class Article(models.Model):
