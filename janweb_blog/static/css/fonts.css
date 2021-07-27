@@ -22,3 +22,8 @@
     font-family: 'ZillaMedium';
     src: url('./fonts/Zilla_Slab/ZillaSlab-Medium.ttf');
 }
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('./fonts/Roboto/Roboto-Black.ttf');
+}

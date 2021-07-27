@@ -101,4 +101,10 @@ def GetPost(request):
     else:
         data = dict()
         data['post'] = post
+        if request.user.is_authenticated:
+            data['is_auth'] = True
+            print(data['is_auth'])
+        else: 
+            data['is_auth'] = False
         return render(request, 'fullpost_page.html', context=data)
+    

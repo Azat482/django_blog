@@ -1,0 +1,42 @@
+{%extends 'index.html'%}
+
+{%block auth_header_user%}
+    {%if is_auth%}
+        {%include 'ex_auth_index.html'%}
+    {%else%}
+    <div class = 'h_nav_item'><a href="/registration">SigIn</a></div>
+    <div class = 'h_nav_item'><a href="/login"       >LogIn</a></div>    
+    {%endif%}
+{%endblock%}
+
+{%block content%}
+{%load static%}
+<link rel="stylesheet" href="{% static 'css/fullpost_page.css' %}">
+
+<div id = 'post'>
+    <div class = 'post_author'>
+        <div class = 'author_block'>
+        {{post.author}}
+        </div>
+    </div>
+    <div class = 'name_of_full_post'>
+        {{post.name}}
+    </div>
+    <div class = 'categories'>
+        {%for ct in post.cat%}
+        <div class = 'cat'>
+            {{ct}}
+        </div>    
+        {%endfor%}
+    </div>
+    <div class = 'shr_desc_full_post'>
+        {{post.shrt_desc}}
+    </div>
+    <div class = 'text'>
+        {{post.text}}
+    </div>
+</div>
+<div id = 'navpult'>
+
+</div>
+{%endblock%}
