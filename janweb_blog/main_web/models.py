@@ -13,4 +13,5 @@ class Article(models.Model):
     cat = models.ManyToManyField(Category)
     short_description = models.CharField(max_length=500, default='')
     text = models.TextField(max_length=10000)
-
+    data_post = models.DateField(null=True, auto_now= False, auto_now_add=False)
+    time_post = models.TimeField(null=True, auto_now_add=False, auto_now=False)

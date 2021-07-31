@@ -83,17 +83,13 @@
     height: 50px;
 }
 
-#select_cat{
+.select_cat{
     display: flex;
     justify-content: flex-start;
     margin-top: 15px;
-    height: auto;
-    width: auto;
-}
-
-select#select_cat {
     width: 300px;
     height: 40px;
     font-family: 'ZillaLight';
     font-size: 25px;
 }
+

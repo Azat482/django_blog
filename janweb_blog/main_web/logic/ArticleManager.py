@@ -1,7 +1,15 @@
+from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.postgres import search
+from django.db.models import query_utils
+from django.db.models.query import QuerySet
 from django.http import request
+from django.utils.datetime_safe import date
 from ..models import Article, Category
+from django.contrib.postgres.search import SearchVector
+import datetime
+from itertools import chain
 
 class BaseArticleBox:
     def __init__(self, Art):
@@ -33,6 +41,8 @@ def AddPost(req, data):
         article.name = name
         article.short_description = short_text
         article.text = full_text
+        article.data_post = datetime.date.today()
+        article.time_post = datetime.datetime.now().time()
         article.save()
         article.cat.add(Category.objects.get(cat = category))
     except Exception as e:
@@ -40,16 +50,46 @@ def AddPost(req, data):
     else:
         return True
 
-def GetArtcles(filters = None):
-    toSendData = []
-    for item in Article.objects.all():
-        toSendData.append(BaseArticleBox(item))
+def GetArtcles(filters = {}):
+    print('FILTERS:', filters)
+    articles = None
+
+    if filters['str'] or filters['cat'] or filters['date'] or filters['time']:        
+        filter_list = []
+        
+        if filters['cat']:
+            qs_cat_filter      = Article.objects.filter(cat__cat = filters['cat'])
+            filter_list.append(qs_cat_filter)
+        
+        if filters['str']:
+            print('IS NOT NONE STR!!!!!')
+            qs_name_filter     = Article.objects.filter(name__search = filters['str'])
+            qs_srt_desc_filter = Article.objects.filter(short_description__search = filters['str'])
+            qs_text_filter     = Article.objects.filter(text__search = filters['str'])
+            buff = QuerySet.union(qs_name_filter, qs_srt_desc_filter, qs_text_filter)
+            filter_list.append(buff)
+        
+        if filters['date']:
+            pass
+
+        if filters['time']:
+            pass
+
+        articles = QuerySet.intersection(*filter_list)
+    else:
+        articles = Article.objects.all()
+
+    toSendData = [BaseArticleBox(item) for item in articles]
     return toSendData
 
 def GetFullPost(PostId):
     post = Article.objects.get(pk = PostId)
     return FullArticleBox(post)
 
+def GetCat():
+        CatList= Category.objects.all()
+        result = [(row.cat, row.cat) for row in CatList]
+        return result
 
                 
         

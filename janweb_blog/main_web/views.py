@@ -2,7 +2,7 @@ from django.http.response import Http404
 from .models import Article
 from django import forms
 from django.forms.fields import ChoiceField
-from .forms import User_reg_form, User_auth_form, UserPostArticleForm
+from .forms import User_reg_form, User_auth_form, UserPostArticleForm, FilterPostsForm
 
 from django.contrib import auth
 from django.contrib.auth import login
@@ -15,8 +15,17 @@ from .logic.ArticleManager import AddPost, GetArtcles, GetFullPost
 
 # Create your views here.
 def index(request):
-    data = dict()
-    data['articles'] = GetArtcles()
+    data = dict(
+        articles = GetArtcles(
+            filters = dict(
+                str  = request.GET.get('str_filter', False),
+                cat  = request.GET.get('cat_filter', False),
+                date = request.GET.get('data_filter', False),
+                time = request.GET.get('time_filter', False),
+            )
+        ),
+        FilterForm = FilterPostsForm(),
+    )
     if not request.user.is_authenticated:
         return render(request, 'index.html', context=data)
     else:

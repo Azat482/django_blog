@@ -1,7 +1,10 @@
 from django import forms
+from django.contrib.auth import validators
 from django.forms import widgets
 from django.forms.fields import CharField, ChoiceField
 from .models import Category
+from .logic.ArticleManager import GetCat
+from django.core.validators import RegexValidator
 
 class User_reg_form(forms.Form):
     login = forms.CharField(label='Your login')
@@ -20,13 +23,6 @@ class UserPostArticleForm(forms.Form):
         super().__init__(*args, **kwargs)
 
     #ГЕНИЙ МЫСЛИ
-    def GetCat():
-        CatList= Category.objects.all()
-        result = []
-        for row in CatList:
-            result.append( (row.cat, row.cat) )
-        return result
-
     name = forms.CharField(
         min_length=1,
         max_length=255,
@@ -36,7 +32,7 @@ class UserPostArticleForm(forms.Form):
     
     category = forms.ChoiceField(
         choices = GetCat,
-        widget= forms.Select(attrs={'id': 'select_cat'})
+        widget= forms.Select(attrs={'class': 'select_cat'})
         )
 
     short_description = forms.CharField(
@@ -53,4 +49,37 @@ class UserPostArticleForm(forms.Form):
         max_length=10000,
         label='Full text of article'
         )
+
+class FilterPostsForm(forms.Form):
+    DATA_FORMAT_VALIDATOR = RegexValidator(r'^\\d{2}\\.\\d{2}\\.\\d{4}$', 'wrong format of data')
+    cat_filter = forms.ChoiceField(
+        label='category',
+        choices=GetCat,
+        widget=forms.Select(attrs={'class': 'select_cat'}), 
+        required=False
+    )
+
+    str_filter = forms.CharField(
+        label='articles witch contains',
+        min_length=1,
+        max_length=100,
+        widget = forms.TextInput(attrs={'class': 'search_field'}),
+        required=False,
+    )
+
+    data_from = forms.CharField(
+        initial='dd/mm/yy',
+        required=False,
+        label='from date',
+        validators=[DATA_FORMAT_VALIDATOR],
+        )
+
+    data_to   = forms.CharField(
+        initial='dd/mm/yy',
+        required=False,
+        label='to date',
+        validators=[DATA_FORMAT_VALIDATOR],
+        )
+
+
 
