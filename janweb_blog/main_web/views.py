@@ -20,8 +20,8 @@ def index(request):
             filters = dict(
                 str  = request.GET.get('str_filter', False),
                 cat  = request.GET.get('cat_filter', False),
-                date = request.GET.get('data_filter', False),
-                time = request.GET.get('time_filter', False),
+                date_from = request.GET.get('date_from_filter', False),
+                date_to = request.GET.get('date_to_filter', False),
             )
         ),
         FilterForm = FilterPostsForm(),
@@ -91,8 +91,8 @@ def PosteArticle(request):
                 if result == True:
                     return HttpResponseRedirect('/')
                 else:
-                    print('ERROR', result)
-                    return HttpResponseRedirect('/poste')
+                    print('ERROR!!!:', result)
+                    return HttpResponseRedirect('/addpost')
         else:
             data = dict()
             data['ArticlePost'] = UserPostArticleForm()

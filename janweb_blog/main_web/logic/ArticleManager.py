@@ -54,7 +54,7 @@ def GetArtcles(filters = {}):
     print('FILTERS:', filters)
     articles = None
 
-    if filters['str'] or filters['cat'] or filters['date'] or filters['time']:        
+    if filters['str'] or filters['cat'] or filters['date_from'] or filters['date_to']:        
         filter_list = []
         
         if filters['cat']:
@@ -62,18 +62,29 @@ def GetArtcles(filters = {}):
             filter_list.append(qs_cat_filter)
         
         if filters['str']:
-            print('IS NOT NONE STR!!!!!')
             qs_name_filter     = Article.objects.filter(name__search = filters['str'])
             qs_srt_desc_filter = Article.objects.filter(short_description__search = filters['str'])
             qs_text_filter     = Article.objects.filter(text__search = filters['str'])
             buff = QuerySet.union(qs_name_filter, qs_srt_desc_filter, qs_text_filter)
             filter_list.append(buff)
         
-        if filters['date']:
-            pass
+        if filters['date_from'] and not filters['date_to']:
+            qs_from_date = Article.objects.filter(
+                data_post__gte = filters['date_from']
+                )
+            filter_list.append(qs_from_date)
 
-        if filters['time']:
-            pass
+        if filters['date_to'] and not filters['date_from']:
+            qs_to_date = Article.objects.filter(
+                data_post__lte = filters['date_to']
+                )
+            filter_list.append(qs_to_date)
+
+        if filters['date_from'] and filters['date_to']:
+            qs_from_to_date = Article.objects.filter(
+                data_post__range = (filters['date_from'], filters['date_to'])
+                )
+            filter_list.append(qs_from_to_date)
 
         articles = QuerySet.intersection(*filter_list)
     else:
@@ -87,10 +98,6 @@ def GetFullPost(PostId):
     return FullArticleBox(post)
 
 def GetCat():
-        CatList= Category.objects.all()
-        result = [(row.cat, row.cat) for row in CatList]
-        return result
-
-                
-        
-
+    CatList= Category.objects.all()
+    result = [(row.cat, row.cat) for row in CatList]
+    return result

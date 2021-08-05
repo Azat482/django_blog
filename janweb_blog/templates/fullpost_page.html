@@ -2,10 +2,11 @@
 
 {%block auth_header_user%}
     {%if is_auth%}
-        {%include 'ex_auth_index.html'%}
+        <div class = 'h_nav_item'><a href="/addpost"        >Poste</a></div>
+        <div class = 'h_nav_item'><a href="/logout"       >LogOut</a></div>
     {%else%}
-    <div class = 'h_nav_item'><a href="/registration">SigIn</a></div>
-    <div class = 'h_nav_item'><a href="/login"       >LogIn</a></div>    
+        <div class = 'h_nav_item'><a href="/registration">SigIn</a></div>
+        <div class = 'h_nav_item'><a href="/login"       >LogIn</a></div>    
     {%endif%}
 {%endblock%}
 

@@ -5,6 +5,8 @@ from django.forms.fields import CharField, ChoiceField
 from .models import Category
 from .logic.ArticleManager import GetCat
 from django.core.validators import RegexValidator
+from django.core.exceptions import ValidationError
+import re
 
 class User_reg_form(forms.Form):
     login = forms.CharField(label='Your login')
@@ -51,34 +53,41 @@ class UserPostArticleForm(forms.Form):
         )
 
 class FilterPostsForm(forms.Form):
-    DATA_FORMAT_VALIDATOR = RegexValidator(r'^\\d{2}\\.\\d{2}\\.\\d{4}$', 'wrong format of data')
+    
+    class MyDateInput(forms.DateInput):
+        input_type = 'date'
+        format = '%Y-%m-%d'
+
     cat_filter = forms.ChoiceField(
-        label='category',
+        label='Category',
         choices=GetCat,
         widget=forms.Select(attrs={'class': 'select_cat'}), 
-        required=False
+        required=False,
+        
     )
 
     str_filter = forms.CharField(
-        label='articles witch contains',
+        label='Articles witch contains',
         min_length=1,
         max_length=100,
         widget = forms.TextInput(attrs={'class': 'search_field'}),
         required=False,
     )
 
-    data_from = forms.CharField(
-        initial='dd/mm/yy',
-        required=False,
-        label='from date',
-        validators=[DATA_FORMAT_VALIDATOR],
+    date_from_filter = forms.DateField(
+        required = False,
+        label='From date',
+        widget=MyDateInput({
+            'class': 'form-control'
+           })
         )
 
-    data_to   = forms.CharField(
-        initial='dd/mm/yy',
+    date_to_filter   = forms.DateField(
         required=False,
-        label='to date',
-        validators=[DATA_FORMAT_VALIDATOR],
+        label='To date',
+        widget=MyDateInput({
+            'class': 'form-control'
+           })
         )
 
 

@@ -20,8 +20,6 @@
                 </a>
             </div>
             <div class = 'header_navbar'>
-            </div>
-            <div class = 'header_navbar'>
                 <div class = 'h_nav_item'><a href="/about"       >About</a></div>
                 {% block auth_header_user %}
                 <div class = 'h_nav_item'><a href="/registration">SigIn</a></div>
@@ -58,7 +56,7 @@
             </div>
             {%endfor%}    
         </div>
-        <div id = 'pult'>
+        <div id = 'pult_main_page'>
             <div id = 'filter_field'>
                 <p>Search filter</p>
                 <form method="GET">
@@ -66,7 +64,8 @@
                     {%for item in FilterForm%}
                     <div class = 'filter_item'>
                         <div class = 'label_filter_field'>{{item.label}}</div>
-                        <div class = '{{item.name}}'>{{item}}</div>
+                        <div class = '{{item.name}} inputfield'>{{item}}</div>
+                        {{item.errors}}
                     </div>
                     {%endfor%}
                     <input type="submit" value="Search">
