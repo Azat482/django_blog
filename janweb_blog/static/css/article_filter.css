@@ -1,6 +1,6 @@
 #pult_main_page{
     width: 100%;
-    padding-top: 50px;
+    padding-top: 25px;
     padding-left: 20px;
     padding-right: 20px;
     display: flex;
@@ -11,24 +11,46 @@
 #filter_field{
     width: auto;
     height: auto;
+    border: 1px solid rgb(202, 208, 231);
+    border-radius: 5px;
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #filter_field p{
-    color:rgb(26, 26, 26);
-    font-size: 35px;
-    font-family: 'ArcivoBlac';
+    color:rgb(73, 73, 73);
+    font-size: 27px;
+    font-family: 'ZillaMedium';
 }
 
 .filter_item{
     font-size: 20px;
     color: rgb(32, 32, 32);
-    font-family: 'ZillaLight';
+    font-family: 'ArcivoBlac';
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin-bottom: 10px;
 }
 
-.input_field{
-   
+.input_field select, .input_field input{
+    width: 300px;
+    height: 30px;
+    color: rgb(77, 77, 77);
+    font-size: 20px;
+    font-family: 'ZillaLight';
+}
+
+#filter_submit{
+    background-color: rgb(255, 255, 255);
+    color: rgb(10, 10, 10);
+    font-family: 'ArcivoBlac';
+    font-size: 22px;
+    width: 100px;
+    height: 35px;
+    border: 1px solid black;
+    border-radius: 2px;
 }
 

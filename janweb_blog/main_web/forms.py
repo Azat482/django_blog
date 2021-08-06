@@ -1,4 +1,4 @@
-from django import forms
+from django import forms, setup
 from django.contrib.auth import validators
 from django.forms import widgets
 from django.forms.fields import CharField, ChoiceField
@@ -7,6 +7,7 @@ from .logic.ArticleManager import GetCat
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 import re
+from itertools import chain
 
 class User_reg_form(forms.Form):
     login = forms.CharField(label='Your login')
@@ -54,16 +55,21 @@ class UserPostArticleForm(forms.Form):
 
 class FilterPostsForm(forms.Form):
     
+    def CreateCatList( cats):
+        default_selec = 'all category'
+        rez = [(cat, cat) for cat in cats]
+        rez.insert(0, (None, default_selec))
+        return rez
+
     class MyDateInput(forms.DateInput):
         input_type = 'date'
         format = '%Y-%m-%d'
 
     cat_filter = forms.ChoiceField(
         label='Category',
-        choices=GetCat,
-        widget=forms.Select(attrs={'class': 'select_cat'}), 
+        widget=forms.Select(attrs={'class': 'select_cat', }), 
         required=False,
-        
+        choices = CreateCatList( GetCat())
     )
 
     str_filter = forms.CharField(

@@ -58,17 +58,17 @@
         </div>
         <div id = 'pult_main_page'>
             <div id = 'filter_field'>
-                <p>Search filter</p>
+                <p>SEARCH FILTER</p>
                 <form method="GET">
                     {%csrf_token%}
                     {%for item in FilterForm%}
                     <div class = 'filter_item'>
                         <div class = 'label_filter_field'>{{item.label}}</div>
-                        <div class = '{{item.name}} inputfield'>{{item}}</div>
+                        <div class = '{{item.name}} input_field'>{{item}}</div>
                         {{item.errors}}
                     </div>
                     {%endfor%}
-                    <input type="submit" value="Search">
+                    <input type="submit" value="Search" id = 'filter_submit'>
                 </form>
             </div>
         </div>

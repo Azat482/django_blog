@@ -99,5 +99,5 @@ def GetFullPost(PostId):
 
 def GetCat():
     CatList= Category.objects.all()
-    result = [(row.cat, row.cat) for row in CatList]
+    result = [row.cat for row in CatList]
     return result
