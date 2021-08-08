@@ -25,6 +25,8 @@ class UserPostArticleForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    def CreateCatList(cats):
+        return [(cat, cat) for cat in cats]
     #ГЕНИЙ МЫСЛИ
     name = forms.CharField(
         min_length=1,
@@ -34,7 +36,7 @@ class UserPostArticleForm(forms.Form):
         )
     
     category = forms.ChoiceField(
-        choices = GetCat,
+        choices = CreateCatList(GetCat()),
         widget= forms.Select(attrs={'class': 'select_cat'})
         )
 

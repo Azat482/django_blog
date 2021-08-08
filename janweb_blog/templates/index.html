@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="{%static 'css/fonts.css'%}">
     <link rel="stylesheet" href="{%static 'css/articles_container.css'%}">
     <link rel="stylesheet" href="{%static 'css/article_filter.css'%}">
+    <link rel="stylesheet" href="{%static 'css/header_user_block.css'%}">
+    <script type="text/javascript" src="{%static 'js/jquery-3.6.0.js'%}"></script>
 </header>
 <body>
     <div class = 'Header'>
@@ -20,11 +22,13 @@
                 </a>
             </div>
             <div class = 'header_navbar'>
-                <div class = 'h_nav_item'><a href="/about"       >About</a></div>
-                {% block auth_header_user %}
-                <div class = 'h_nav_item'><a href="/registration">SigIn</a></div>
-                <div class = 'h_nav_item'><a href="/login"       >LogIn</a></div>
-                {% endblock %}
+                    <div class = 'h_nav_item'><a href="/about"       >About</a></div>
+                {%if is_auth%}
+                    {% include 'auth_user_header.html' %}
+                {%else%}
+                    <div class = 'h_nav_item'><a href="/registration">SigIn</a></div>
+                    <div class = 'h_nav_item'><a href="/login"       >LogIn</a></div>
+                {%endif%}    
             </div>
         </div>
     </div>

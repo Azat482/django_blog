@@ -2,8 +2,7 @@
 
 {%block auth_header_user%}
     {%if is_auth%}
-        <div class = 'h_nav_item'><a href="/addpost"        >Poste</a></div>
-        <div class = 'h_nav_item'><a href="/logout"       >LogOut</a></div>
+        {%include 'auth_header_user.html'%}
     {%else%}
         <div class = 'h_nav_item'><a href="/registration">SigIn</a></div>
         <div class = 'h_nav_item'><a href="/login"       >LogIn</a></div>    

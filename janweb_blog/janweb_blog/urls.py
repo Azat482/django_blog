@@ -26,8 +26,9 @@ urlpatterns = [
     path('login/', views.Logining),
     path('logout/', views.Logout),
     path('login/wrong/', views.LoginingWrong),
+    path('account/', views.AccountPage),
 
     path('addpost/', views.PosteArticle),
-
+    path('myposts/', views.MyPosts),
     path('post/', views.GetPost),
 ]

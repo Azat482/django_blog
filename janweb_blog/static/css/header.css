@@ -49,6 +49,9 @@
 
 .h_nav_item{
     margin-left: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .h_nav_item a{

@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, request, Http404
 
 from .logic.UserMng import AddUser, AuthUser, LogoutUser
-from .logic.ArticleManager import AddPost, GetArtcles, GetFullPost
+from .logic.ArticleManager import AddPost, GetArtcles, GetFullPost, GetUserArticles
 
 # Create your views here.
 def index(request):
@@ -26,11 +26,13 @@ def index(request):
         ),
         FilterForm = FilterPostsForm(),
     )
-    if not request.user.is_authenticated:
-        return render(request, 'index.html', context=data)
+    auth_flag = request.user.is_authenticated
+    data['is_auth'] = auth_flag
+    if auth_flag:
+        data['user'] = request.user
     else:
-        print('req', request)
-        return render(request, 'ex_auth_index.html', context = data )
+        data['user'] = None
+    return render(request, 'index.html', context=data)
 
 def Registration(request):
     if request.method == 'POST':
@@ -96,6 +98,7 @@ def PosteArticle(request):
         else:
             data = dict()
             data['ArticlePost'] = UserPostArticleForm()
+            data['is_auth'] = request.user.is_authenticated
             return render(request, 'poste_article.html', context=data)
     else:
         return HttpResponseRedirect('/')
@@ -117,3 +120,25 @@ def GetPost(request):
             data['is_auth'] = False
         return render(request, 'fullpost_page.html', context=data)
     
+def MyPosts(request):
+    auth_user = request.user.is_authenticated
+    if auth_user:
+        data = dict(
+            user_articles = GetUserArticles(
+                filters = dict(
+                    user = request.user,
+                    str = request.GET.get('str_filter', False),
+                    cat = request.GET.get('cat_filter', False),
+                    date_from = request.GET.get('date_from_filter', False),
+                    date_to = request.GET.get('date_to_filter', False) 
+                )
+            ),
+            is_auth = True,
+            filter_form = FilterPostsForm(),
+        )
+        return render(request, 'user_posts_page.html', context=data)
+    else:
+        HttpResponseRedirect('/')
+
+def AccountPage(request):
+    pass

@@ -1,0 +1,28 @@
+
+<script type="text/javascript">
+    $(document).ready(
+        function(){
+            $('#user_block nav').hide()
+            $('#user_block').hover(
+                function(){
+                    $('#user_block nav').stop().fadeToggle(200)
+                }
+            )
+        }
+    )
+</script>
+<div id = 'user_block'>
+    <div id="main_user_visible">
+        <img src="https://yt3.ggpht.com/ytc/AKedOLRUAlBW2_Egz3sOGQFqQFYdo60YoGFYQynw3MPZEQ=s900-c-k-c0x00ffffff-no-rj" alt="account" width="32px" height="32px">
+        <p>{{user}}</p>
+    </div>
+    <nav>
+        <ul id="user_block_submenu">
+            <li><a href="/account/{{user}}">Account</a></li>
+            <li><a href="/myposts"> My posts</a></li>
+            <li><a href="/addpost">New post <p id='plus_in_submenu'>+</p></a></li>
+            <li><a href="/logout">Exit</a></li>
+        </ul>    
+    </nav>
+</div>
+

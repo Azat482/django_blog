@@ -50,11 +50,10 @@ def AddPost(req, data):
     else:
         return True
 
-def GetArtcles(filters = {}):
-    print('FILTERS:', filters)
-    articles = None
 
-    if filters['str'] or filters['cat'] or filters['date_from'] or filters['date_to']:        
+def FilterArticles(filters = {}):
+    articles = None
+    if filters['str'] or filters['cat'] or filters['date_from'] or filters['date_to'] or filters['user']:        
         filter_list = []
         
         if filters['cat']:
@@ -85,11 +84,19 @@ def GetArtcles(filters = {}):
                 data_post__range = (filters['date_from'], filters['date_to'])
                 )
             filter_list.append(qs_from_to_date)
+        
+        if filters['user']:
+            qs_user = Article.objects.filter(author = filters['user'])
+            filter_list.append(qs_user)
 
         articles = QuerySet.intersection(*filter_list)
     else:
         articles = Article.objects.all()
+    return articles
 
+def GetArtcles(filters = {}):
+    filters['user'] = False
+    articles = FilterArticles(filters)
     toSendData = [BaseArticleBox(item) for item in articles]
     return toSendData
 
@@ -101,3 +108,7 @@ def GetCat():
     CatList= Category.objects.all()
     result = [row.cat for row in CatList]
     return result
+
+def GetUserArticles(filters = {}):
+    user_articles = FilterArticles(filters)
+    return [BaseArticleBox(item) for item in user_articles]
