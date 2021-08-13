@@ -3,33 +3,30 @@
 .post_article_page{
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
+    align-items: flex-start;
+    justify-content: stretch;
     height: inherit;
     width: 100%;
 }
 
 #article_add_form{
+    margin-top: 20px;
     align-self: flex-start;
     box-sizing: border-box;
     padding-top: 50px;
-    border-top:  none;
-    border-bottom: none;
-    border-right:1px solid rgb(230, 230, 230) ;
-    border-left: 1px solid rgb(230, 230, 230);
-    width: 70%;
-    height: 100%;
+    width: 1100px;
+    height: auto;
     background-color: rgb(253, 253, 253);
-
 }
 
 #article_add_form form{
     display: grid;
     box-sizing: border-box;
-    width: auto;
+    width: inherit;
     height: auto;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
 }
 
 .post_article_page.submit_button {
@@ -48,48 +45,69 @@
 }
 
 #form_item .label{
-    font-size: 35px;
-    font-family: 'RobotoBold';
+    margin-left: 1px;
+    margin-bottom: 2px;
+    font-size: 25px;
+    font-family: 'ZillaMedium';
     width: auto;
     display: flex;
     justify-content: flex-start;
+    color: rgb(65, 65, 65);
 }
 
 #form_item textarea[name = 'name']{
     height: 75px;
-    font-size: 20px;
+    font-size: 17px;
+    padding: 5px;
 }
 
 #form_item textarea[name = 'short_description']{
     height: 125px;
-    font-size: 20px;
+    font-size: 17px;
+    padding: 5px;
 }
 
 #form_item textarea[name = 'text']
 {
-    height: 500px;
+    height: 1100px;
     font-size: 20px;
 }
 
+#form_item textarea{
+    resize: none;
+}
+
 #article_add_form input[type = 'submit']{
-    font-family: 'ZillaLight';
+    font-family: 'Roboto';
     font-size: 30px;
-    border-color: red;
-    box-shadow: none;
-    border-radius: 10px;
-    background-color: rgb(255, 0, 0);
-    color: black;
+    border-radius: 25px;
+    border: 1px solid rgba(0, 255, 0, 0.801);
+    background-color: rgb(9, 255, 0);
+    color: rgb(255, 255, 255);
     width: 250px;
     height: 50px;
+    box-shadow: 0 0 5px 0 rgba(0, 219, 0, 0.904);
 }
 
 .select_cat{
     display: flex;
     justify-content: flex-start;
-    margin-top: 15px;
     width: 300px;
     height: 40px;
     font-family: 'ZillaLight';
     font-size: 25px;
 }
 
+#side_addpost_page{
+    width: 100%;
+    min-height: 100%;
+    height: auto;
+    background-color: white;
+    padding: 10px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.trumbowyg-box, .trumbowyg-editor {
+    z-index: 0;
+}

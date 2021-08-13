@@ -66,9 +66,10 @@
 
 #user_block_submenu li a{
     text-decoration: none;
-    color: rgb(2, 2, 2);
+    color: rgb(36, 36, 36);
     font-size: 20px;
-    font-family: 'Lato';
+    font-family: 'ZillaLight';
+    letter-spacing: 0.2em;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -77,7 +78,7 @@
 
 #plus_in_submenu{
     color: rgb(0, 255, 0);
-    font-size: 30px;
+    font-size: 35px;
     margin-left: 5px;
     font-family: 'Roboto';
 }

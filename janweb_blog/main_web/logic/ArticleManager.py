@@ -1,4 +1,5 @@
-from django import forms
+from os import WIFSTOPPED
+from django import conf, forms
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.contrib.postgres import search
@@ -6,10 +7,13 @@ from django.db.models import query_utils
 from django.db.models.query import QuerySet
 from django.http import request
 from django.utils.datetime_safe import date
+from django.conf import settings
 from ..models import Article, Category
 from django.contrib.postgres.search import SearchVector
-import datetime
 from itertools import chain
+import os
+import datetime
+
 
 class BaseArticleBox:
     def __init__(self, Art):
@@ -21,11 +25,18 @@ class BaseArticleBox:
         self.name = Art.name
         self.cat = cat
         self.shrt_desc = Art.short_description
+        self.date_post = Art.data_post
+        self.time_post = Art.time_post
+        self.changed_flag = Art.changed_flag
+    
+        
 
 class FullArticleBox(BaseArticleBox):
     def __init__(self, Art):
         self.text = Art.text
         super().__init__(Art)
+    def SetDataField(data):
+        pass
 
 def AddPost(req, data):
     name       = data['name']
@@ -112,3 +123,70 @@ def GetCat():
 def GetUserArticles(filters = {}):
     user_articles = FilterArticles(filters)
     return [BaseArticleBox(item) for item in user_articles]
+
+def GetSingleArticle(user, post_id):
+    try:
+        art = Article.objects.get(author = user, id = post_id)
+        return FullArticleBox(art)
+    except Exception as e:
+        return False
+def DeletePost(user, post_id):
+    try:
+        post = Article.objects.get(author = user, id = post_id)
+        post_name = post.name
+        post.delete()
+    except Exception as e:
+        print(e)
+        return False        
+    else:
+        print(
+            'Post deleted.\n',
+            'Name: {0}\n'.format(post_name),
+            'ID: {0}\n'.format(post_id)
+        )
+        return True
+
+def EditPost(user, post_id, newdata):
+    print('ID POST IN LOGIC MODULE!!!', post_id, user, newdata)
+    try:
+        post = Article.objects.get(author = user, id = post_id)
+        post.name = newdata['name']
+        post.short_description = newdata['short_description']
+        post.text = newdata['text']
+        post.changed_flag = True
+        post.data_post = datetime.date.today()
+        post.time_post = datetime.datetime.now().time()
+        post.cat.remove(*Category.objects.all())
+        post.cat.add(Category.objects.get(cat = newdata['category']))
+        post.save()
+        return True
+    except Exception as e:
+        print(e) 
+        return False
+
+def UploadUserImage(user, image):
+    try:
+        
+        media_root = settings.MEDIA_ROOT
+        media_url = 'media/'
+        us_path = 'users-media/images/users-articles/' + str(user)
+        datetime_str = str(datetime.datetime.now()).replace(" ", "")
+        ext_img = os.path.splitext(image.name)[1] #расширение типа png jpg...
+        
+        full_path = "%s/%s" % (media_root, us_path)
+        if not os.path.exists(full_path):
+            print(full_path, ' - is not exist')
+            os.makedirs(full_path)
+        
+        image_path = "%s/image_%s%s" % (us_path, datetime_str, ext_img)
+        
+        save_img_path = "%s/%s" % (media_root, image_path)
+        with open(save_img_path, 'wb+') as dest:
+            for small_part in image:
+                dest.write(small_part)
+        
+        media_url_image = media_url + image_path
+        return media_url_image
+    except Exception as e:
+        print(e)
+        return False

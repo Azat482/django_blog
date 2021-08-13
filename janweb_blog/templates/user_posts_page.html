@@ -2,12 +2,89 @@
 {%extends 'index.html'%}
 
 
+
 {%block content%}
+{%load static%}
 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.delete_post_button').click(function(){
+            $(this).addClass('activate_delete_button')
+            const post_id = $(this).attr('post_id')
+            $.ajax({
+                data: {
+                    post_id: post_id,
+                },
 
+                url: "{% url  'delete_post' %}",
+                success: (res)=>{
+                    console.log('post deleted, response server: ', res.result)
+                },
+                error: (res)=>{
+                    alert('SERVER ERROR')
+                },
 
-{%for art in user_articles%}
-{{art.name}}
-{%endfor%}
+            })
+        })
 
+    })
+
+</script>
+
+<link rel="stylesheet" href="{%static 'css/user_posts_page.css'%}">
+<div id = 'posts_look_edit'>
+    <p></p>
+    <div id = 'filter_user_posts'>
+        <form method="GET">
+            {%csrf_token%}
+            <div id = 'search_main'>
+                {{filter_form.str_filter}}
+                <input id = 'user_filter_submit' type="submit" value="FILTER">
+            </div>
+            <div id = 'over_parametres'>
+                <div id = 'cat'>{{filter_form.cat_filter}}</div>
+                <div id ='dates'>
+                    <span>
+                        <label for="id_date_from_filter">Date from:</label>
+                        {{filter_form.date_from_filter}}        
+                    </span>
+                    <span>
+                        <label for="id_date_tofilter">To date:</label>
+                        {{filter_form.date_to_filter}}        
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id = 'user_posts_container'>
+        {%for art in user_articles%}
+        <div class = 'user_post_box'>
+            <div class = 'post_content'>
+                <p class = 'art_name'><a href="/post/?id={{art.id}}">{{art.name}}</a></p>
+                <p class = 'art_desc'>{{art.shrt_desc}}</p>
+                {%if art.date_post and art.time_post%}
+                <p class = 'art_datetime'>
+                    <span>Changed: </span>
+                    {{art.date_post}} 
+                    {{art.time_post}}
+                </p> 
+                {%endif%}   
+            </div>
+            <div class="edit_options">
+                <a href="/myposts/edit_user_post?post_id={{art.id}}">
+                    <div post_id = {{art.id}} class="edit_post_button edit_item">
+                        <img src="{%static 'images/edit_posts_page/edit_post.svg'%}" alt="edit">
+                    </div>    
+                </a>
+                <div post_id = {{art.id}} class="delete_post_button edit_item">
+                    <img src="{%static '/images/edit_posts_page/delete_post.svg'%}" alt ="delete">
+                </div>      
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+<div class = 'side_panel_edit_posts_page'>
+
+</div>
 {%endblock%}

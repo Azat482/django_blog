@@ -15,6 +15,8 @@ class Article(models.Model):
     text = models.TextField(max_length=10000)
     data_post = models.DateField(null=True, auto_now= False, auto_now_add=False)
     time_post = models.TimeField(null=True, auto_now_add=False, auto_now=False)
-
+    changed_flag = models.BooleanField(default=False)
+    
     class Meta:
-        pass
+        ordering = ['-data_post']
+

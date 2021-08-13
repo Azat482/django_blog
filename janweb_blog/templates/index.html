@@ -42,6 +42,11 @@
         <div id = 'articles_container'>
             {%for post in articles%}
             <div class = 'box_post'>
+                <a href="/">
+                    <div class="box_post_user">
+                        {{post.author}}
+                    </div>
+                </a>
                 <a href="/post/?id={{post.id}}">
                     <div class = 'name_of_post'>
                         {{post.name}}
@@ -56,6 +61,17 @@
                 </div>
                 <div class = 'description'>
                     {{post.shrt_desc}}
+                </div>
+                <div class = 'datetime_post'>
+                    {%if post.date_post and post.time_post%}
+                    <p> 
+                        {%if post.changed_flag%}
+                        <span>Changed: </span>
+                        {%endif%}
+                        {{post.date_post}}
+                        {{post.time_post}}
+                    </p>
+                    {%endif%}
                 </div>
             </div>
             {%endfor%}    

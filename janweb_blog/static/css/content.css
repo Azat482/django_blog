@@ -5,9 +5,15 @@
     padding-right: 250px;
     padding-left: 250px;
     width: 100%;
-    min-height: 100%;
+    min-height: 1080px;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.content .common_border{
+    border-radius: 20px;
+    border: 1px solid rgba(192, 192, 192, 0.836);
+    box-shadow: 0 0 10px 1px rgb(202, 202, 202);
 }

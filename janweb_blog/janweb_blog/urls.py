@@ -17,6 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from main_web import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
@@ -31,4 +35,7 @@ urlpatterns = [
     path('addpost/', views.PosteArticle),
     path('myposts/', views.MyPosts),
     path('post/', views.GetPost),
-]
+    path('myposts/delete_post', views.DeletePostReq,  name='delete_post'),
+    path('myposts/edit_user_post', views.EditPostsReq, name='edit_post'),
+    path('addimage/', views.AddUserImageReq, name='add_image')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)   

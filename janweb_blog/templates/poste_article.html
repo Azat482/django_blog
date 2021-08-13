@@ -5,9 +5,69 @@
 
 {%block content%}
 {%load static%}
-<link rel="stylesheet" href="{%static './css/post_page.css'%}">
+<link rel="stylesheet" href="{%static 'css/post_page.css'%}">
+
+<link rel="stylesheet" href="{%static 'js/trumbowyg/dist/ui/trumbowyg.min.css'%}">
+<script type="text/javascript" src="{%static 'js/trumbowyg/dist/trumbowyg.js'%}"></script>
+<script type="text/javascript" src="{%static 'js/trumbowyg/dist/plugins/upload/trumbowyg.upload.min.js'%}"></script>
+
+<script type="text/javascript">
+
+    function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+    }
+
+    $(document).ready(function(){
+        $('#article_text').trumbowyg(
+        {
+            btnsDef: {
+            // Create a new dropdown
+                image: {
+                    dropdown: ['insertImage', 'upload'],
+                    ico: 'insertImage'
+                }
+            },
+            // Redefine the button pane
+            btns: [
+                ['viewHTML'],
+                ['formatting'],
+                ['strong', 'em', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['image'], // Our fresh created dropdown
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['horizontalRule'],
+                ['removeformat'],
+                ['fullscreen']
+            ],
+            plugins: {
+                // Add imagur parameters to upload plugin for demo purposes
+                upload: {
+                    serverPath: "{%url 'add_image'%}",
+                    fileFieldName: 'image',
+                    headers: { "X-CSRFToken": getCookie("csrftoken") },
+                }
+            }
+        })
+    })    
+</script>
+
+
 <div class = 'post_article_page'>
-    <div id = 'article_add_form'>
+    <div id = 'article_add_form' class="common_border">
         <form method="POST">
             {%csrf_token%}
             {%for item in ArticlePost%}
@@ -21,9 +81,17 @@
             </div>
             {%endfor%}
             <div class = 'submit_button'>
-                <input type="submit" value="Poste this article">
+                {%if post_id_to_edit%}
+                <input type="hidden" name="post_id" value={{post_id_to_edit}}>
+                <input type='submit' value="Edit ">
+                {%else%}
+                <input type="submit" value="Post">
+                {%endif%}
             </div>
         </form>    
+    </div>
+    <div id = 'side_addpost_page' class="common_border">
+        
     </div>
 </div>
 {%endblock%}

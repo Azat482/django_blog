@@ -20,6 +20,7 @@ class User_auth_form(forms.Form):
     user_login = forms.CharField(label='Your login')
     user_password = forms.CharField(label='Your pasword', widget=forms.PasswordInput())
 
+#да, я знаю, что можно было создать форму на основе модели
 class UserPostArticleForm(forms.Form):
     
     def __init__(self, *args, **kwargs):
@@ -49,7 +50,7 @@ class UserPostArticleForm(forms.Form):
     
 
     text =  forms.CharField(
-        widget=forms.widgets.Textarea(), 
+        widget=forms.widgets.Textarea(attrs={'id': 'article_text'}), 
         min_length=1,
         max_length=10000,
         label='Full text of article'
@@ -69,7 +70,7 @@ class FilterPostsForm(forms.Form):
 
     cat_filter = forms.ChoiceField(
         label='Category',
-        widget=forms.Select(attrs={'class': 'select_cat', }), 
+        widget=forms.Select(attrs={'class': 'select_cat' }), 
         required=False,
         choices = CreateCatList( GetCat())
     )
@@ -86,7 +87,7 @@ class FilterPostsForm(forms.Form):
         required = False,
         label='From date',
         widget=MyDateInput({
-            'class': 'form-control'
+            'class': 'form-control date_field'
            })
         )
 
@@ -94,7 +95,7 @@ class FilterPostsForm(forms.Form):
         required=False,
         label='To date',
         widget=MyDateInput({
-            'class': 'form-control'
+            'class': 'form-control date_field'
            })
         )
 

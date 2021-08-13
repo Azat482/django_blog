@@ -1,18 +1,21 @@
-from django.http.response import Http404
-from .models import Article
+import json
+from django.http import response
+from django.http.response import Http404, JsonResponse
+from .models import Article, Category
 from django import forms
 from django.forms.fields import ChoiceField
 from .forms import User_reg_form, User_auth_form, UserPostArticleForm, FilterPostsForm
 
 from django.contrib import auth
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, request, Http404
 
 from .logic.UserMng import AddUser, AuthUser, LogoutUser
-from .logic.ArticleManager import AddPost, GetArtcles, GetFullPost, GetUserArticles
-
+from .logic.ArticleManager import AddPost, GetArtcles, GetFullPost, GetUserArticles, DeletePost, EditPost, GetSingleArticle
+from .logic.ArticleManager import UploadUserImage
 # Create your views here.
 def index(request):
     data = dict(
@@ -134,7 +137,7 @@ def MyPosts(request):
                 )
             ),
             is_auth = True,
-            filter_form = FilterPostsForm(),
+            filter_form = FilterPostsForm(field_order=['str_filter', 'cat_filter', "date_from_filter", 'date_to_filter']),
         )
         return render(request, 'user_posts_page.html', context=data)
     else:
@@ -142,3 +145,67 @@ def MyPosts(request):
 
 def AccountPage(request):
     pass
+
+@login_required
+def EditPostsReq(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserPostArticleForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            post_id = request.POST.get('post_id')
+            is_edit = EditPost(user= user,post_id= post_id, newdata= form_data)
+            if is_edit:
+                return HttpResponseRedirect('/myposts')
+            else:
+                return render(request, 'poste_article.html', {'error': 'artcile is not edited'})
+    else:
+        id_post = request.GET.get('post_id', '')
+        post_data = GetSingleArticle(user = user, post_id = id_post)
+        if post_data:
+            set_data_form = dict(
+                name = post_data.name,
+                category = post_data.cat,
+                short_description = post_data.shrt_desc,
+                text = post_data.text,
+            )
+            form = UserPostArticleForm(initial = set_data_form)
+            data = dict()
+            data['ArticlePost'] = form
+            data['is_auth'] = request.user.is_authenticated
+            data['post_id_to_edit'] = id_post
+            return render(request, 'poste_article.html', context=data)
+        else:
+            return HttpResponseRedirect('/myposts')
+
+
+@login_required
+def DeletePostReq(request):
+    id_post = request.GET.get('post_id', '')
+    user = request.user
+    res_db = DeletePost(user, id_post)
+    data = dict()
+    if res_db:
+        data['result'] = 'deleted succes, post id: {0}'.format(id_post)
+    else:
+        data['result'] = 'deleted error, post id: {0}'.format(id_post)
+    return JsonResponse(data)
+
+
+def AddUserImageReq(request):
+    if request.user.is_authenticated:
+        user = request.user
+        image = request.FILES['image']
+        load_image = UploadUserImage(user, image)
+        print('LOAD IMAGE: ', load_image)
+        if load_image:
+            img_path = 'http://localhost:8000/' + load_image
+            ajax_res = {
+            "success": True, 
+                "file": img_path,
+            }
+            return JsonResponse(ajax_res)
+        else:
+            return JsonResponse({"success": False,})
+    else:
+        return HttpResponseRedirect('/')
