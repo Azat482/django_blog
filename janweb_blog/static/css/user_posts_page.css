@@ -32,7 +32,7 @@
 }
 
 .user_post_box{
-    width: 1050px;
+    width: 950px;
     height: 200px;
     display: flex;
     flex-direction: row;
@@ -114,8 +114,8 @@
 }
 
 .edit_item img{
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
 }
 
 .search_field{

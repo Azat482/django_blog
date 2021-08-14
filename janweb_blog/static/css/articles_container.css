@@ -69,6 +69,7 @@
     align-items: flex-start;
     font-size: 20px;
     font-family: 'ZillaMedium';
+    line-height: 1.1em;
 }
 
 .datetime_post{

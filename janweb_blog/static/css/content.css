@@ -2,8 +2,8 @@
 .content{
     margin-top: 50px;
     box-sizing: border-box;
-    padding-right: 250px;
-    padding-left: 250px;
+    padding-right: 150px;
+    padding-left: 150px;
     width: 100%;
     min-height: 1080px;
     height: auto;
@@ -16,4 +16,9 @@
     border-radius: 20px;
     border: 1px solid rgba(192, 192, 192, 0.836);
     box-shadow: 0 0 10px 1px rgb(202, 202, 202);
+}
+
+.text_wrap_overflow{
+    overflow: hidden;
+    word-wrap: break-word;
 }

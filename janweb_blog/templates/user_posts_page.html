@@ -60,8 +60,8 @@
         {%for art in user_articles%}
         <div class = 'user_post_box'>
             <div class = 'post_content'>
-                <p class = 'art_name'><a href="/post/?id={{art.id}}">{{art.name}}</a></p>
-                <p class = 'art_desc'>{{art.shrt_desc}}</p>
+                <p class = 'art_name text_wrap_overflow'><a href="/post/?id={{art.id}}">{{art.name}}</a></p>
+                <p class = 'art_desc text_wrap_overflow'>{{art.shrt_desc}}</p>
                 {%if art.date_post and art.time_post%}
                 <p class = 'art_datetime'>
                     <span>Changed: </span>

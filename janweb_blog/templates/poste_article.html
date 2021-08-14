@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="{%static 'js/trumbowyg/dist/ui/trumbowyg.min.css'%}">
 <script type="text/javascript" src="{%static 'js/trumbowyg/dist/trumbowyg.js'%}"></script>
 <script type="text/javascript" src="{%static 'js/trumbowyg/dist/plugins/upload/trumbowyg.upload.min.js'%}"></script>
+<script src="//rawcdn.githack.com/RickStrahl/jquery-resizable/0.35/dist/jquery-resizable.min.js"></script>
+<script type="text/javascript" src="{%static 'js/trumbowyg/dist/plugins/resizimg/trumbowyg.resizimg.min.js'%}"></script>
 
 <script type="text/javascript">
 
@@ -31,7 +33,8 @@
 
     $(document).ready(function(){
         $('#article_text').trumbowyg(
-        {
+        {   
+            tagsToRemove: ['script', 'link'],
             btnsDef: {
             // Create a new dropdown
                 image: {
@@ -59,7 +62,11 @@
                     serverPath: "{%url 'add_image'%}",
                     fileFieldName: 'image',
                     headers: { "X-CSRFToken": getCookie("csrftoken") },
-                }
+                },
+                resizimg: {
+                    minSize: 100,
+                    step: 5,
+                },
             }
         })
     })    
@@ -83,7 +90,7 @@
             <div class = 'submit_button'>
                 {%if post_id_to_edit%}
                 <input type="hidden" name="post_id" value={{post_id_to_edit}}>
-                <input type='submit' value="Edit ">
+                <input type='submit' value="Save changes ">
                 {%else%}
                 <input type="submit" value="Post">
                 {%endif%}

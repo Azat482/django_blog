@@ -1,4 +1,5 @@
 import json
+from django import http
 from django.http import response
 from django.http.response import Http404, JsonResponse
 from .models import Article, Category
@@ -98,6 +99,9 @@ def PosteArticle(request):
                 else:
                     print('ERROR!!!:', result)
                     return HttpResponseRedirect('/addpost')
+            else:
+                print('INVALID DATA')
+                return HttpResponseRedirect('/addpost')
         else:
             data = dict()
             data['ArticlePost'] = UserPostArticleForm()
@@ -158,7 +162,9 @@ def EditPostsReq(request):
             if is_edit:
                 return HttpResponseRedirect('/myposts')
             else:
-                return render(request, 'poste_article.html', {'error': 'artcile is not edited'})
+                return HttpResponseRedirect('/myposts')
+        else:
+            return render(request, 'poste_article.html', {'error': 'artcile is not edited'})
     else:
         id_post = request.GET.get('post_id', '')
         post_data = GetSingleArticle(user = user, post_id = id_post)

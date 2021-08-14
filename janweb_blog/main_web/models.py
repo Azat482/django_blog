@@ -12,7 +12,7 @@ class Article(models.Model):
     name = models.CharField(max_length=255)
     cat = models.ManyToManyField(Category)
     short_description = models.CharField(max_length=500, default='')
-    text = models.TextField(max_length=10000)
+    text = models.TextField(max_length=200000)
     data_post = models.DateField(null=True, auto_now= False, auto_now_add=False)
     time_post = models.TimeField(null=True, auto_now_add=False, auto_now=False)
     changed_flag = models.BooleanField(default=False)

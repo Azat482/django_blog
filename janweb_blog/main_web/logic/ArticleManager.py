@@ -57,7 +57,7 @@ def AddPost(req, data):
         article.save()
         article.cat.add(Category.objects.get(cat = category))
     except Exception as e:
-        return e
+        return False
     else:
         return True
 
@@ -166,7 +166,6 @@ def EditPost(user, post_id, newdata):
 
 def UploadUserImage(user, image):
     try:
-        
         media_root = settings.MEDIA_ROOT
         media_url = 'media/'
         us_path = 'users-media/images/users-articles/' + str(user)

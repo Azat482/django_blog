@@ -4,19 +4,20 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    justify-content: stretch;
+    justify-content: center;
     height: inherit;
     width: 100%;
 }
 
 #article_add_form{
-    margin-top: 20px;
+    margin-top: 50px;
     align-self: flex-start;
     box-sizing: border-box;
-    padding-top: 50px;
+    padding-top: 30px;
     width: 1100px;
     height: auto;
     background-color: rgb(253, 253, 253);
+    margin-bottom: 50px;
 }
 
 #article_add_form form{
@@ -35,6 +36,7 @@
 
 #form_item{
     margin-bottom: 20px;
+    overflow: hidden;
 }
 
 #form_item textarea{
@@ -42,6 +44,7 @@
     border: 1px solid rgb(202, 202, 202);
     border-radius: 4px;
     background-color: rgb(255, 255, 255);
+    resize: none;
 }
 
 #form_item .label{
@@ -65,21 +68,21 @@
     height: 125px;
     font-size: 17px;
     padding: 5px;
+    width: 100%;
 }
 
 #form_item textarea[name = 'text']
-{
-    height: 1100px;
+{   
+    width: 100%;
+    height: 800px;
     font-size: 20px;
+    
 }
 
-#form_item textarea{
-    resize: none;
-}
 
 #article_add_form input[type = 'submit']{
     font-family: 'Roboto';
-    font-size: 30px;
+    font-size: 25px;
     border-radius: 25px;
     border: 1px solid rgba(0, 255, 0, 0.801);
     background-color: rgb(9, 255, 0);
@@ -106,6 +109,7 @@
     padding: 10px;
     margin-left: 20px;
     margin-top: 20px;
+    display: none;
 }
 
 .trumbowyg-box, .trumbowyg-editor {

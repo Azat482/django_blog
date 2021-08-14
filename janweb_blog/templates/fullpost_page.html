@@ -12,33 +12,37 @@
 {%block content%}
 {%load static%}
 <link rel="stylesheet" href="{% static 'css/fullpost_page.css' %}">
-
-<div id = 'post'>
-    <div class = 'post_author'>
-        <div class = 'author_block'>
-        {{post.author}}
+<div id="main_place_post">
+    <div id = 'post' class="fullpost_borders">
+        <div class = 'post_author'>
+            <div class = 'author_block'>
+            {{post.author}}
+            </div>
         </div>
-    </div>
-    <div class = 'name_of_full_post'>
-        {{post.name}}
-    </div>
-    <div class = 'categories'>
-        {%for ct in post.cat%}
-        <div class = 'cat'>
-            {{ct}}
+        <div class = 'name_of_full_post text_wrap_overflow'>
+            {{post.name}}
+        </div>
+        <div class = 'categories'>
+            {%for ct in post.cat%}
+            <div class = 'cat'>
+                {{ct}}
+            </div>    
+            {%endfor%}
+        </div>
+        <div class = 'shr_desc_full_post text_wrap_overflow'>
+            {{post.shrt_desc}}
+        </div>
+        <div class = 'text text_wrap_overflow'>
+            
+            {{post.text|safe}}
         </div>    
-        {%endfor%}
     </div>
-    <div class = 'shr_desc_full_post'>
-        {{post.shrt_desc}}
+    <div id="fullpost_bottom" class= "fullpost_borders">
+        fsd
     </div>
-    <pre>
-        <div class = 'text'>
-            {{post.text}}
-        </div>    
-    </pre>
 </div>
-<div id = 'navpult'>
+
+<div id = 'navpult' class="fullpost_borders">
 
 </div>
 {%endblock%}

@@ -30,7 +30,7 @@ class UserPostArticleForm(forms.Form):
         return [(cat, cat) for cat in cats]
     #ГЕНИЙ МЫСЛИ
     name = forms.CharField(
-        min_length=1,
+        min_length=10,
         max_length=255,
         label='Name of article',
         widget=forms.widgets.Textarea()
@@ -42,7 +42,7 @@ class UserPostArticleForm(forms.Form):
         )
 
     short_description = forms.CharField(
-        min_length=1,
+        min_length=100,
         max_length=500, 
         widget=forms.widgets.Textarea(),
         label='Short description of article'
@@ -51,8 +51,8 @@ class UserPostArticleForm(forms.Form):
 
     text =  forms.CharField(
         widget=forms.widgets.Textarea(attrs={'id': 'article_text'}), 
-        min_length=1,
-        max_length=10000,
+        min_length=1000,
+        max_length=200000,
         label='Full text of article'
         )
 

@@ -1,17 +1,33 @@
+#main_place_post{
+    margin-bottom: 50px;
+}
+
 #post{
-    width: 1000px;
+    width: 1050px;
     height: auto;
     min-height: 1000px;
-    background-color: rgb(255, 253, 249);
+    background-color: rgb(255, 255, 255);
     padding-right: 30px;
     padding-left: 20px;
-    margin-top: 50px;
+    margin-top: 30px;
+    margin-bottom: 5px;
 }
 
 #navpult{
-    width: 300px;
+    width: 100%;
     height: auto;
     min-height: 1000px;
+    background-color: white;   
+    margin-top: 30px;
+    margin-left: 10px;
+    margin-bottom: 50px;
+}
+
+#main_place_post{
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 .post_author{
@@ -22,17 +38,20 @@
 
 .post_author .author_block{
     font-family:'ZillaMedium';
-    font-size: 22px;
-    border: 1px solid rgb(117, 117, 117);
+    font-size: 20px;
+    border: 1px solid rgba(161, 173, 194, 0.671);
     border-radius: 5px;
-    min-width: 100px;
-    color: black;
-    background-color: rgb(253, 253, 253);
+    min-width: 120px;
+    height: 30px;
+    color: rgb(85, 85, 85);
+    background-color: rgb(255, 255, 255);
     margin-top: 25px;
     margin-bottom: 15px;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-items: center;
+    box-shadow: 0 1px 5px -1px rgb(158, 232, 255);
 }
 
 .name_of_full_post{
@@ -41,8 +60,8 @@
     align-items: flex-start;
     font-size: 35px;
     font-family: 'ZillaMedium';
-    border-bottom: 1px solid rgb(255, 235, 185);
-    padding-bottom: 5px;
+    border-bottom: 1px solid rgb(224, 224, 224);
+    padding-bottom: 4px;
     margin-bottom: 10px;
 }
 
@@ -62,15 +81,17 @@
     padding-bottom: 1px;
     font-size: 15px;
     font-family: 'ZillaLight';
+    margin-right: 5px;
 }
 
 .shr_desc_full_post{
-    background-color: rgb(231, 228, 255);
+    background-color: rgb(255, 255, 255);
     font-size: 17px;
     font-family: 'ZillaLight';
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 10px;
+    border: 1px solid rgba(192, 192, 192, 0.788);
 }
 
 .text{
@@ -79,7 +100,19 @@
     align-items: flex-start;
     margin-top: 20px;
     font-size: 20px;
-    font-family: 'ZillaLight';
+    font-family: 'ZillaMedium';
     color: rgb(29, 29, 29);
 }
 
+.fullpost_borders{
+    border-radius: 5px;
+    border: 1px solid rgb(224, 224, 224);
+    box-shadow: 0 0 5px 2px rgb(223, 223, 223);
+}
+
+#fullpost_bottom{
+    height: 200px;
+    background-color: white;
+    width: 100%;
+    padding: 15px;
+}

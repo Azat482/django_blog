@@ -43,12 +43,12 @@
             {%for post in articles%}
             <div class = 'box_post'>
                 <a href="/">
-                    <div class="box_post_user">
+                    <div class="box_post_user ">
                         {{post.author}}
                     </div>
                 </a>
                 <a href="/post/?id={{post.id}}">
-                    <div class = 'name_of_post'>
+                    <div class = 'name_of_post text_wrap_overflow'>
                         {{post.name}}
                     </div>    
                 </a>
@@ -59,7 +59,7 @@
                     </div>
                     {%endfor%}
                 </div>
-                <div class = 'description'>
+                <div class = 'description text_wrap_overflow'>
                     {{post.shrt_desc}}
                 </div>
                 <div class = 'datetime_post'>
