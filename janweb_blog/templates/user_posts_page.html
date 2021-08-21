@@ -1,4 +1,3 @@
-
 {%extends 'index.html'%}
 
 
@@ -8,23 +7,41 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+        $('#confirm_of_deleting_post').hide()
         $('.delete_post_button').click(function(){
-            $(this).addClass('activate_delete_button')
             const post_id = $(this).attr('post_id')
-            $.ajax({
-                data: {
-                    post_id: post_id,
-                },
+            delete_button = this
+            confirm_delete = false
+            html_elem  = '#' + post_id+'.art_name'
+            post_name = $(html_elem).text()
+            console.log('ID: ', post_id, '\tNAME: ', post_name, '\tHTML ELEMENT: ', html_elem)
+            $('#deleting_post_name').append(
+                '<p>"'+ post_name+ '" ?</p>'
+            )
+            $('#confirm_of_deleting_post').show()
+    
+            $('#confirm_of_deleting_post .delete').click(function(){
+                $.ajax({
+                    data: {
+                        post_id: post_id,
+                    },
 
-                url: "{% url  'delete_post' %}",
-                success: (res)=>{
-                    console.log('post deleted, response server: ', res.result)
-                },
-                error: (res)=>{
-                    alert('SERVER ERROR')
-                },
-
+                    url: "{% url  'delete_post' %}",
+                    success: (res)=>{
+                        console.log('post deleted, response server: ', res.result)
+                    },
+                    error: (res)=>{
+                        alert('SERVER ERROR')
+                    },
+                })
+                $('#confirm_of_deleting_post').hide()
+                $(delete_button).addClass('activate_delete_button')
             })
+
+            $('#confirm_of_deleting_post .cancel').click(function(){
+                $('#confirm_of_deleting_post').hide()
+            })
+
         })
 
     })
@@ -33,7 +50,6 @@
 
 <link rel="stylesheet" href="{%static 'css/user_posts_page.css'%}">
 <div id = 'posts_look_edit'>
-    <p></p>
     <div id = 'filter_user_posts'>
         <form method="GET">
             {%csrf_token%}
@@ -60,7 +76,14 @@
         {%for art in user_articles%}
         <div class = 'user_post_box'>
             <div class = 'post_content'>
-                <p class = 'art_name text_wrap_overflow'><a href="/post/?id={{art.id}}">{{art.name}}</a></p>
+                <p id={{art.id}} class = 'art_name text_wrap_overflow'><a href="/post/?id={{art.id}}">{{art.name}}</a></p>
+                <div class = 'category'>
+                    {%for category in art.cat%}
+                    <div class = 'cat_item'>
+                        {{category}}
+                    </div>
+                    {%endfor%}
+                </div>
                 <p class = 'art_desc text_wrap_overflow'>{{art.shrt_desc}}</p>
                 {%if art.date_post and art.time_post%}
                 <p class = 'art_datetime'>
@@ -78,12 +101,23 @@
                 </a>
                 <div post_id = {{art.id}} class="delete_post_button edit_item">
                     <img src="{%static '/images/edit_posts_page/delete_post.svg'%}" alt ="delete">
-                </div>      
+                </div>
             </div>
         </div>
         {%endfor%}
     </div>
 </div>
+
+<div id = 'confirm_of_deleting_post'>
+    <div class="float_window">
+        <p id = 'deleting_post_name'>Are you sure that you want delete post:</p>
+        <div class="bottom_box">
+            <button class ='delete'>Delete</button>
+            <button class ='cancel'>Cancel</button>        
+        </div>
+    </div>
+</div>
+
 <div class = 'side_panel_edit_posts_page'>
 
 </div>

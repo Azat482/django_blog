@@ -34,17 +34,17 @@
 
 #user_block nav{
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.911);
+    background-color: rgba(253, 254, 255, 0.911);
     margin-top: 5px;
     min-height: 200px;
     width: 200px;
-    border-radius: 2px 2px 8px 8px;
-    border: 1px solid rgb(44, 44, 44);
+    border-radius: 1px 1px 2px 2px;
+    border: 2px solid rgba(163, 163, 163, 0.842);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    right: -20px;
+    right: 0;
 }
 
 #user_block_submenu{
@@ -68,8 +68,8 @@
     text-decoration: none;
     color: rgb(36, 36, 36);
     font-size: 20px;
-    font-family: 'ZillaLight';
-    letter-spacing: 0.2em;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 0.11em;
     display: flex;
     flex-direction: row;
     align-items: center;

@@ -6,6 +6,7 @@ from .models import Article, Category
 from django import forms
 from django.forms.fields import ChoiceField
 from .forms import User_reg_form, User_auth_form, UserPostArticleForm, FilterPostsForm
+from django.conf import settings
 
 from django.contrib import auth
 from django.contrib.auth import login
@@ -14,9 +15,19 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, request, Http404
 
-from .logic.UserMng import AddUser, AuthUser, LogoutUser
+from .logic.UserMng import SiteUserManager
 from .logic.ArticleManager import AddPost, GetArtcles, GetFullPost, GetUserArticles, DeletePost, EditPost, GetSingleArticle
 from .logic.ArticleManager import UploadUserImage
+from .logic.SiteUserPrifileMng import ProfileDataManage
+
+
+def SetUserData(req, data):
+    data['is_auth'] = req.user.is_authenticated
+    if data['is_auth']:
+        data['user'] = req.user
+        profile_img = settings.SITE_URL + str(ProfileDataManage(req).GetProfileAvatar())
+        data['profile_img'] = profile_img
+    return data
 # Create your views here.
 def index(request):
     data = dict(
@@ -28,14 +39,10 @@ def index(request):
                 date_to = request.GET.get('date_to_filter', False),
             )
         ),
-        FilterForm = FilterPostsForm(),
+        FilterForm = FilterPostsForm(field_order=['str_filter', 'cat_filter', "date_from_filter", 'date_to_filter']),
     )
-    auth_flag = request.user.is_authenticated
-    data['is_auth'] = auth_flag
-    if auth_flag:
-        data['user'] = request.user
-    else:
-        data['user'] = None
+
+    data = SetUserData(request, data)
     return render(request, 'index.html', context=data)
 
 def Registration(request):
@@ -48,7 +55,7 @@ def Registration(request):
             data['password_again'] = reg_form.cleaned_data['password_again']
             data['email'] = reg_form.cleaned_data['email']
             if data['password'] == data['password_again']:
-                is_reg = AddUser(data)
+                is_reg = SiteUserManager.AddUser(data)
                 if is_reg == True:
                     return HttpResponseRedirect('/login')
                 else:
@@ -67,7 +74,7 @@ def Logining(request):
             data = dict()
             data['username'] = log_form.cleaned_data['user_login']
             data['password'] = log_form.cleaned_data['user_password']
-            is_auth = AuthUser(request, data)
+            is_auth = SiteUserManager.AuthUser(request, data)
             if is_auth:
                 return HttpResponseRedirect('/')
             else:
@@ -79,7 +86,7 @@ def LoginingWrong(request):
     return render(request,'login.html', {'is_wrong': True, 'form': User_auth_form})
 
 def Logout(request):
-    LogoutUser(request)
+    SiteUserManager.LogoutUser(request)
     return HttpResponseRedirect('/')
 
 def PosteArticle(request):
@@ -105,7 +112,7 @@ def PosteArticle(request):
         else:
             data = dict()
             data['ArticlePost'] = UserPostArticleForm()
-            data['is_auth'] = request.user.is_authenticated
+            data = SetUserData(request, data)
             return render(request, 'poste_article.html', context=data)
     else:
         return HttpResponseRedirect('/')
@@ -120,11 +127,7 @@ def GetPost(request):
     else:
         data = dict()
         data['post'] = post
-        if request.user.is_authenticated:
-            data['is_auth'] = True
-            print(data['is_auth'])
-        else: 
-            data['is_auth'] = False
+        data = SetUserData(request, data)
         return render(request, 'fullpost_page.html', context=data)
     
 def MyPosts(request):
@@ -132,23 +135,21 @@ def MyPosts(request):
     if auth_user:
         data = dict(
             user_articles = GetUserArticles(
+                user = request.user,
                 filters = dict(
-                    user = request.user,
                     str = request.GET.get('str_filter', False),
                     cat = request.GET.get('cat_filter', False),
                     date_from = request.GET.get('date_from_filter', False),
                     date_to = request.GET.get('date_to_filter', False) 
                 )
             ),
-            is_auth = True,
             filter_form = FilterPostsForm(field_order=['str_filter', 'cat_filter', "date_from_filter", 'date_to_filter']),
         )
+        data = SetUserData(request, data)
         return render(request, 'user_posts_page.html', context=data)
     else:
         HttpResponseRedirect('/')
 
-def AccountPage(request):
-    pass
 
 @login_required
 def EditPostsReq(request):
@@ -178,8 +179,8 @@ def EditPostsReq(request):
             form = UserPostArticleForm(initial = set_data_form)
             data = dict()
             data['ArticlePost'] = form
-            data['is_auth'] = request.user.is_authenticated
             data['post_id_to_edit'] = id_post
+            data = SetUserData(request, data)
             return render(request, 'poste_article.html', context=data)
         else:
             return HttpResponseRedirect('/myposts')
@@ -215,3 +216,25 @@ def AddUserImageReq(request):
             return JsonResponse({"success": False,})
     else:
         return HttpResponseRedirect('/')
+
+
+@login_required
+def AccountPage(request):
+    site_url = settings.SITE_URL
+    Profile = ProfileDataManage(request).GetProfileData()
+    Profile.avatar_url = str(site_url) + str(Profile.avatar_url)
+    data = dict(
+        Profile = Profile,
+        is_auth = request.user.is_authenticated,
+    )
+    data = SetUserData(request, data)
+    print('Profile data: ', data['Profile'])
+    return render(request, 'user_profile.html', context=data)
+
+
+@login_required
+def AccountSetAvatarReq(request):
+    if request.method == 'POST':
+        img = request.FILES['avatar']
+        upload_ava = ProfileDataManage(request).SetAvatarProfile(img)
+        return HttpResponseRedirect('./')

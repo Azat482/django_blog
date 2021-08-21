@@ -1,0 +1,35 @@
+{%extends 'index.html'%}
+
+{%block content%}
+{%load static%}
+<link rel="stylesheet" href="{%static 'css/user_profile.css'%}">
+<div class = 'user_profile'>
+    <div class = 'profile_avatar block_border_profile'>
+        <p class="username">{{Profile.username}}</p>
+        <!--<img class="img_avatar" src='https://vraki.net/sites/default/files/inline/images/10_342.jpg' alt="avatar">-->
+        <img src={{Profile.avatar_url}} alt="avatar">
+        <form id ='set_avatar' method="post" action='/account/set-avatar' enctype="multipart/form-data">
+            {%csrf_token%}
+            <div>
+                <input id="file" name="avatar" type="file" accept="image/png, image/jpeg, image/jpg">
+                <label for="file">Choose file</label>    
+            </div>
+            <input class="send_file" type="submit" value="load avatar">
+        </form>
+    </div>
+    <div class="main_field_profile block_border_profile">
+        <div class="username_container">
+            
+        </div>
+        <p class="date_registration">Date registration: {{Profile.date_registration}}</p>
+        <div class="statistic">
+                <p class="st_item">Your articles: {{Profile.articles}}</p>
+                <p class="st_item">Your likes {{Profile.likes}}</p>
+                <p class="st_item">Your diselikes: {{Profile.diselikes}}</p>
+                <p class="st_item">Your comments: {{Profile.comments}}</p>
+        </div>
+    </div>
+
+</div>
+
+{%endblock%}

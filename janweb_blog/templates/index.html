@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <title>Litblog</title>
     <link rel="stylesheet" href="{%static 'css/header.css'%}">
-    <link rel="stylesheet" href="{% static 'css/content.css' %}">
+    <link rel="stylesheet" href="{%static 'css/content.css' %}">
+    <link rel="stylesheet" href="{%static 'css/footer.css'%}">
     <link rel="stylesheet" href="{%static 'css/index.css'%}">
     <link rel="stylesheet" href="{%static 'css/fonts.css'%}">
     <link rel="stylesheet" href="{%static 'css/articles_container.css'%}">
@@ -78,7 +79,7 @@
         </div>
         <div id = 'pult_main_page'>
             <div id = 'filter_field'>
-                <p>SEARCH FILTER</p>
+                <p>SEARCH</p>
                 <form method="GET">
                     {%csrf_token%}
                     {%for item in FilterForm%}
@@ -92,6 +93,11 @@
                 </form>
             </div>
         </div>
+        {%endblock%}
+    </div>
+    <div id = 'footer'>
+        {%block footer%}
+
         {%endblock%}
     </div>    
 </body>
