@@ -1,4 +1,5 @@
 from ..models import UserProfile
+from django.contrib.auth.models import User
 from itertools import chain
 from .FileManager import FileManager
 import datetime
@@ -12,7 +13,7 @@ class ProfileDataManage:
                 self.avatar_url = profile.avatar_url
                 self.date_registration = profile.date_registration
                 self.likes = profile.user_likes_count
-                self.diselikes = profile.user_diselikes_count
+                self.dislikes = profile.user_dislikes_count
                 self.articles = profile.user_articles_count
                 self.comments  = profile.user_comments_count
 
@@ -28,7 +29,7 @@ class ProfileDataManage:
                 return string_data
 
         def __init__(self, req):
-            self.user = req.user
+            self.user = User.objects.get(username = req.user)
             try:
                 self.profile = UserProfile.objects.get(user = self.user)
             except UserProfile.DoesNotExist as e:
@@ -60,3 +61,10 @@ class ProfileDataManage:
 
         def GetProfileAvatar(self):
             return self.profile.avatar_url
+        
+        def UpdateStatistic(self):
+            Profile = self.profile
+            User = self.user
+            Profile.user_articles_count = User.article_set.all().count()
+            Profile.user_comments_count = User.commentarticle_set.all().count()         
+            Profile.save()

@@ -11,9 +11,74 @@
 
 {%block content%}
 {%load static%}
+
+<script>
+    const GetArticleRating = (post_id)=>{
+        likes = undefined
+        dislikes = undefined
+        $.ajax({
+            data: {
+                post_id: post_id,
+            },
+
+            url: "{%url 'get_post_ratings'%}",
+            success: (res)=>{
+                console.log('Post rating has been recieved')
+                likes = res.likes
+                dislikes = res.dislikes
+                $('.counter_likes').text(likes)
+                $('.counter_dislikes').text(dislikes)
+                console.log('update, likes: ', likes, '\tdislikes: ', dislikes)
+            },
+            error: (res)=>{
+                console.log('Error getting post ratings')
+                console.log(res.err)
+            },
+        })
+    }
+
+    const SendUserRating = (method = undefined, post_id)=>{
+        const acceslist = ['like', 'dislike']
+        if(acceslist.indexOf(method) != -1){
+            $.ajax({
+                data: {
+                    method: method,
+                    post_id: post_id,
+                },
+
+                url: "{%url 'set_user_rating_to_post'%}",
+
+                success: (res)=>{
+                    console.log('User succes send the: ', method)
+                    console.log(res.res)
+                    GetArticleRating(post_id)
+                },
+
+                error: (res)=>{
+                    console.log('Error sending the: ', method)
+                },
+            })
+        }
+    }
+
+    $(document).ready(
+        function()
+        {   
+            post_id = $('#post').attr('post_id')
+            GetArticleRating(post_id)
+            $('.like_button').on('click', function(){
+                SendUserRating('like', post_id)
+            })
+            $('.dislike_button').on('click', function(){
+                SendUserRating('dislike', post_id)
+            })
+        }
+    )
+</script>
+
 <link rel="stylesheet" href="{% static 'css/fullpost_page.css' %}">
 <div id="main_place_post">
-    <div id = 'post' class="fullpost_borders">
+    <div  id = 'post' class="fullpost_borders" post_id = {{post.id}}>
         <div class = 'post_author'>
             <div class = 'author_block'>
             {{post.author}}
@@ -36,9 +101,42 @@
             
             {{post.text|safe}}
         </div>    
+        <div class="post_rating_field">
+            <div class="rating_item">
+                <button class="img_button_raiting like_button">
+                    <img src="{%static 'images/icons/like.svg'%}" alt="like">
+                    <span class="counter_likes"></span>
+                </button>
+            </div>
+            <div class="rating_item">
+                <button class="img_button_raiting dislike_button">
+                    <img src="{%static 'images/icons/dislike.svg'%}" alt="dislike">
+                    <span class="counter_dislikes"></span>
+                </button>
+            </div>
+        </div>
     </div>
     <div id="fullpost_bottom" class= "fullpost_borders">
-        fsd
+        {%if is_auth%}
+        <form action="/comment/post/" method="POST">
+            {%csrf_token%}
+            <p>Your comment: </p>
+            {{comment_form.comment_text}}
+            <input name="post_id" type="hidden" value = {{post.id}}>
+            <input type="submit" value = 'Send comment'>
+        </form>
+        {%endif%}
+        <div class="comments">
+            <ul>
+                {%for comment in comments%}
+                <li>
+                    <p>{{comment.user}}</p>
+                    <p>{{comment.text}}</p>
+                    <p>{{comment.pub_datetime}}</p>
+                </li>
+                {%endfor%}
+            </ul>
+        </div>
     </div>
 </div>
 

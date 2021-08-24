@@ -1,5 +1,6 @@
 from django import forms, setup
 from django.contrib.auth import validators
+from django.db import models
 from django.forms import widgets
 from django.forms.fields import CharField, ChoiceField
 from .models import Category
@@ -100,4 +101,11 @@ class FilterPostsForm(forms.Form):
         )
 
 
-
+class CommentForm(forms.Form):
+    comment_text = forms.CharField(
+        required=True,
+        max_length=5000,
+        min_length=5,
+        label='Your comment',
+        widget=forms.widgets.Textarea(),
+    )

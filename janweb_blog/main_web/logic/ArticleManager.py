@@ -7,12 +7,13 @@ from django.db.models.query import QuerySet
 from django.http import request
 from django.utils.datetime_safe import date
 from django.conf import settings
-from ..models import Article, Category
+from ..models import Article, Category, CommentArticle, LikeArticle, DislikeArticle
 from django.contrib.postgres.search import SearchVector
 from itertools import chain
 import os
 import datetime
 from .FileManager import FileManager
+from .UserActionsManager import UserActionsManager
 
 class BaseArticleBox:
     def __init__(self, Art):
@@ -28,7 +29,6 @@ class BaseArticleBox:
         self.time_post = Art.time_post
         self.changed_flag = Art.changed_flag
     
-        
 
 class FullArticleBox(BaseArticleBox):
     def __init__(self, Art):
@@ -36,6 +36,13 @@ class FullArticleBox(BaseArticleBox):
         super().__init__(Art)
     def SetDataField(data):
         pass
+
+class ArticleCommentBox:
+    def __init__(self, comment):
+        self.user = comment.user
+        self.pub_datetime = comment.datetime_creating
+        self.text = comment.comment_text
+
 
 def AddPost(req, data):
     name       = data['name']
@@ -167,3 +174,47 @@ def UploadUserImage(user, image):
     except Exception as e:
         print('SETAVAERR: ', e)
         return False
+
+
+
+def AddCommentToArticle(user, text, post_id):
+    UserAction = UserActionsManager(user)
+    result_action = UserAction.AddCommentToObject(
+        CommentModel = CommentArticle,
+        OwnerObject = Article,
+        text = text,
+        obj_id =post_id 
+    )
+    return result_action
+
+def GetArticleComments(post_id):
+    try:
+        comments_qs = Article.objects.get(id = post_id).commentarticle_set.all()
+        comments = [ArticleCommentBox(item) for item in comments_qs]
+        return comments
+    except Exception as e:
+        print(e)
+        return False
+
+def GetArticleRating(post_id):
+    try:
+        article = Article.objects.get(id = post_id)
+        rating_post = {
+            "likes": article.likearticle_set.all().count(),
+            "dislikes": article.dislikearticle_set.all().count(),
+        }
+        return rating_post
+    except Exception as e:
+        print(e)
+        return False
+
+def SetPostRatingsItem(user, post_id, method):
+    UserAction = UserActionsManager(user)
+    result_action = UserAction.SetRatingItemToObject(
+        LikeModel = LikeArticle,
+        DislikeModel = DislikeArticle,
+        OwnerObject = Article,
+        method= method, 
+        obj_id= post_id
+        )
+    return result_action

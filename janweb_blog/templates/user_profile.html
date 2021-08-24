@@ -18,15 +18,17 @@
         </form>
     </div>
     <div class="main_field_profile block_border_profile">
-        <div class="username_container">
-            
+        <div class="user_container">
+            <p class="username_main">{{Profile.username}}</p>
+            <p class="date_registration">Registrated: <span>{{Profile.date_registration}}</span></p>
         </div>
-        <p class="date_registration">Date registration: {{Profile.date_registration}}</p>
-        <div class="statistic">
-                <p class="st_item">Your articles: {{Profile.articles}}</p>
-                <p class="st_item">Your likes {{Profile.likes}}</p>
-                <p class="st_item">Your diselikes: {{Profile.diselikes}}</p>
-                <p class="st_item">Your comments: {{Profile.comments}}</p>
+        <div class="user-inf">
+            <ul class="statistic_list">
+                <li>Your articles:  <span>{{Profile.articles}}</span></li>
+                <li>Your likes:     <span>{{Profile.likes}}</span></li>
+                <li>Your diselikes: <span>{{Profile.dislikes}}</span></li>
+                <li>Your comments:  <span>{{Profile.comments}}</span></li>
+            </ul>            
         </div>
     </div>
 
