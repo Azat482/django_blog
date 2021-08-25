@@ -67,4 +67,7 @@ class ProfileDataManage:
             User = self.user
             Profile.user_articles_count = User.article_set.all().count()
             Profile.user_comments_count = User.commentarticle_set.all().count()         
+            Profile.user_likes_count = User.likearticle_set.all().count()
+            Profile.user_dislikes_count = User.dislikearticle_set.all().count()
             Profile.save()
+        

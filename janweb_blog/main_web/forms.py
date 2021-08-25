@@ -107,5 +107,5 @@ class CommentForm(forms.Form):
         max_length=5000,
         min_length=5,
         label='Your comment',
-        widget=forms.widgets.Textarea(),
+        widget=forms.widgets.Textarea(attrs={'class': 'comment_form_text'}),
     )

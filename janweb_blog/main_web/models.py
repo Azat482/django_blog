@@ -33,7 +33,7 @@ class Article(BaseSiteContentObject):
     changed_flag = models.BooleanField(default=False)
     
     class Meta:
-        ordering = ['-data_post']
+        ordering = ['-data_post', '-time_post']
 
 
 class BaseContentAttributes(models.Model):

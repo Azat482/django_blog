@@ -1,4 +1,6 @@
 
+
+{%load static%}
 <script type="text/javascript">
     $(document).ready(
         function(){
@@ -13,15 +15,15 @@
 </script>
 <div id = 'user_block'>
     <div id="main_user_visible">
-        <img src={{profile_img}} alt="profile_img" width="32px" height="32px">
+        <img src={{profile_img}} alt="profile_img" width="40px" height="40px">
         <p>{{user}}</p>
     </div>
     <nav>
         <ul id="user_block_submenu">
-            <li><a href="/account/{{user}}">ACCOUNT</a></li>
-            <li><a href="/myposts"> MY POSTS</a></li>
-            <li><a href="/addpost">NEW POST <p id='plus_in_submenu'>+</p></a></li>
-            <li><a href="/logout">EXIT</a></li>
+            <li><a href="/account/{{user}}">Account</a></li>
+            <li><a href="/myposts"> My posts</a></li>
+            <li><a href="/addpost">New post<img src="{%static 'images/icons/submenu_plus_to_new_post.svg'%}" alt="+" class="plus_in_submenu"></a></li>
+            <li><a href="/logout">Exit</a></li>
         </ul>    
     </nav>
 </div>

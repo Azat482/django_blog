@@ -56,7 +56,7 @@ def Registration(request):
             data['password_again'] = reg_form.cleaned_data['password_again']
             data['email'] = reg_form.cleaned_data['email']
             if data['password'] == data['password_again']:
-                is_reg = SiteUserManager.AddUser(data)
+                is_reg = SiteUserManager().AddUser(data)
                 if is_reg == True:
                     return HttpResponseRedirect('/login')
                 else:

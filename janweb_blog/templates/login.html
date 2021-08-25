@@ -2,24 +2,26 @@
 {%block content%}
 {%load static%}
 <link rel="stylesheet" href="{%static './css/logining.css'%}">
-<div class = 'logining'>
-    <div class = 'logo_log'>
-        Login
-    </div>
-    <form method="POST">
-        {%csrf_token%}
-        {% for item in form %}
-        <div class = 'log_form_item'>
-            <div class = 'field_label'>{{item.label}}</div>
-            <div class = 'field'>{{item}}</div>
+<div class="log_container">
+    <div class = 'logining common_border'>
+        <div class = 'logo_log'>
+            Login
         </div>
-        {% endfor %}
-        <input type="submit" value="Enter">
-    </form>
-    {% if is_wrong == True  %}
-    <div class="error_mess">
-        Error data
-    </div>
-    {% endif %}
+        <form method="POST">
+            {%csrf_token%}
+            {% for item in form %}
+            <div class = 'log_form_item'>
+                <div class = 'field_label'>{{item.label}}</div>
+                <div class = 'field'>{{item}}</div>
+            </div>
+            {% endfor %}
+            <input type="submit" value="Enter">
+        </form>
+        {% if is_wrong == True  %}
+        <div class="error_mess">
+            Error data
+        </div>
+        {% endif %}
+    </div>    
 </div>
 {%endblock%}

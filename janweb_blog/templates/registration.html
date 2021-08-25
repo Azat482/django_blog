@@ -2,21 +2,24 @@
 {%block content%}
 {%load static%}
 <link rel="stylesheet" href="{% static 'css/registration.css' %}">
-<div class = 'registration'>
-    <form method="POST">
-        {%csrf_token%}
-        {% for item in form %}
-        <div class = 'reg_form_item'>
-            <div class = 'field_label'>{{item.label}}:</div>
-            <div class = 'field'>{{item}}</div>
-        </div>
-        {%endfor%}
-        <input type='submit' value="Register">
-    </form>
-    {%if error %}
-        <div class='error_mess'>
-            {{error}}
-        </div>
-    {%endif%}
+<div class="reg_container">
+    <div class = 'registration common_border'>
+        <p class="reg_header">Registration</p>
+        <form method="POST">
+            {%csrf_token%}
+            {% for item in form %}
+            <div class = 'reg_form_item'>
+                <div class = 'field_label'>{{item.label}}:</div>
+                <div class = 'field'>{{item}}</div>
+            </div>
+            {%endfor%}
+            <input type='submit' value="Register">
+        </form>
+        {%if error %}
+            <div class='error_mess'>
+                {{error}}
+            </div>
+        {%endif%}
+    </div>    
 </div>
 {%endblock%}

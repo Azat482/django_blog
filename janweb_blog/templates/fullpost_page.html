@@ -98,7 +98,6 @@
             {{post.shrt_desc}}
         </div>
         <div class = 'text text_wrap_overflow'>
-            
             {{post.text|safe}}
         </div>    
         <div class="post_rating_field">
@@ -118,21 +117,21 @@
     </div>
     <div id="fullpost_bottom" class= "fullpost_borders">
         {%if is_auth%}
-        <form action="/comment/post/" method="POST">
+        <form action="/comment/post/" method="POST" class="comment_form">
             {%csrf_token%}
             <p>Your comment: </p>
             {{comment_form.comment_text}}
             <input name="post_id" type="hidden" value = {{post.id}}>
-            <input type="submit" value = 'Send comment'>
+            <input class="submit_comment" type="submit" value = 'Send comment'>
         </form>
         {%endif%}
-        <div class="comments">
-            <ul>
+        <div class="comments_field">
+            <ul class="comments_list">
                 {%for comment in comments%}
                 <li>
-                    <p>{{comment.user}}</p>
-                    <p>{{comment.text}}</p>
-                    <p>{{comment.pub_datetime}}</p>
+                    <p class="auth_cmt">{{comment.user}}</p>
+                    <p class="txt_cmt">{{comment.text}}</p>
+                    <p class="dt_cmt">{{comment.pub_datetime}}</p>
                 </li>
                 {%endfor%}
             </ul>

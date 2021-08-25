@@ -10,11 +10,10 @@
         <img src={{Profile.avatar_url}} alt="avatar">
         <form id ='set_avatar' method="post" action='/account/set-avatar' enctype="multipart/form-data">
             {%csrf_token%}
-            <div>
-                <input id="file" name="avatar" type="file" accept="image/png, image/jpeg, image/jpg">
-                <label for="file">Choose file</label>    
+            <div class="sl_file">
+                <input class="file_button" id="file" name="avatar" type="file" accept="image/png, image/jpeg, image/jpg">
             </div>
-            <input class="send_file" type="submit" value="load avatar">
+            <input class="send_file" type="submit" value="Load">
         </form>
     </div>
     <div class="main_field_profile block_border_profile">

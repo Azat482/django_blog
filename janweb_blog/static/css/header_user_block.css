@@ -7,12 +7,12 @@
 #main_user_visible{
     height: 40px;
     min-width: 150px;
-    border: 2px solid rgb(73, 73, 73);
     border-radius: 15px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    margin-left: 30px;
 }
 
 #main_user_visible p{
@@ -23,9 +23,9 @@
 }
 
 #main_user_visible img{
-    margin-left: 10px;
+    margin-left: 5px;
     border-radius: 50%;
-    border: 2px solid rgb(128, 128, 128);
+    border: none;
 }
 
 #main_user_visible p:hover{
@@ -34,17 +34,17 @@
 
 #user_block nav{
     position: absolute;
-    background-color: rgba(253, 254, 255, 0.911);
-    margin-top: 5px;
-    min-height: 200px;
-    width: 200px;
+    background-color: rgba(254, 254, 254, 0.911);
+    margin-top: 7px;
+    min-height: 190px;
+    width: 180px;
     border-radius: 1px 1px 2px 2px;
-    border: 2px solid rgba(163, 163, 163, 0.842);
+    border: 1px solid rgba(207, 202, 202, 0.842);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    right: 0;
+    right: -3px;
 }
 
 #user_block_submenu{
@@ -55,8 +55,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    width: 195px;
+    justify-content: flex-start;
+    width: 170px;
     height: 35px;
 }
 
@@ -66,19 +66,20 @@
 
 #user_block_submenu li a{
     text-decoration: none;
-    color: rgb(36, 36, 36);
-    font-size: 20px;
+    color: rgb(0, 0, 0);
+    font-size: 17px;
     font-family: Arial, Helvetica, sans-serif;
-    letter-spacing: 0.11em;
+    letter-spacing: 0.08em;
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-bottom: 1px solid rgb(221, 214, 214);;
+    border-bottom: 1px solid rgba(236, 230, 230, 0.87);
+    margin-left: 20px;
+    height: 25px;
 }
 
-#plus_in_submenu{
-    color: rgb(0, 255, 0);
-    font-size: 35px;
+.plus_in_submenu{
     margin-left: 5px;
-    font-family: 'Roboto';
+    width: 15px;
+    height: 15px;
 }
